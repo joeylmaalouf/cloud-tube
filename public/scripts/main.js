@@ -1,62 +1,40 @@
-// Submit new twote
-function makeTwote() {
-	var text = $('#new_twote').val();
-	var author = "placeholder"; // Todo, fetch from cookies!
-	var curr_time = $.now(); // Current time in millis
-	var twote_data = {"text": text, "author": author, "time": curr_time};
-	$.ajax({
-		type: "POST",
-		contentType: "application/json",
-		url: "./twotes/new",
-		data: JSON.stringify(twote_data),
-		error: function(err) {
-			console.log(err);
-		}
-	});
+// 2. This code loads the IFrame Player API code asynchronously.
+var tag = document.createElement('script');
+
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+// 3. This function creates an <iframe> (and YouTube player)
+//    after the API code downloads.
+var player;
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('player', { // Inject player into div with id 'player'
+	height: '390',
+	width: '640',
+	videoId: 'M7lc1UVf-VE',
+	events: {
+	  'onReady': onPlayerReady,
+	  'onStateChange': onPlayerStateChange
+	}
+  });
 }
 
-// This is a really bad way to do this, instead you should send the timestamp of your most recent twote and only get the new ones
-// But who cares lets just finish this
-function updateTwotesList() {
-	$.ajax({
-		type: "GET",
-		url: "./twotes",
-		success: function(twotes, status) {
-			$('#twoteslist').html(genTwotesList(twotes));
-		},
-		error: function(err) {
-			console.log(err);
-		},
-		complete: function(data) {
-			setTimeout(updateTwotesList, 3000); // Repeat every 3 seconds
-		}
-	});
+// 4. The API will call this function when the video player is ready.
+function onPlayerReady(event) {
+  event.target.playVideo();
 }
 
-// Generate html to populate the twotes table
-function genTwotesList(twotes) {
-	var list = '';
-	$.each(twotes, function(index, twote) {
-		list.concat(
-			'<tr><td>',
-			'<div class="twote_text">',
-			twote.text,
-			'</div><div class="twote_author">- ',
-			twote.author,
-			'</div>',
-			'</td></tr>'
-		);
-	});
+// 5. The API calls this function when the player's state changes.
+//    The function indicates that when playing a video (state=1),
+//    the player should play for six seconds and then stop.
+var done = false;
+function onPlayerStateChange(event) {
+  if (event.data == YT.PlayerState.PLAYING && !done) {
+	setTimeout(stopVideo, 6000);
+	done = true;
+  }
 }
-
-$(document).ready(function() {
-	updateTwotesList(); // Kick off our endless loop of ajax calls (;_;)
-});
-
-// Make twote request when user is typing in text box and presses 'enter'
-// "Newlines are absolutely haram" -Joey, founder of Twoter Inc.
-$(document).keypress(function(e) {
-    if(e.which == 13 && $('#new_twote').is(":focus")) {
-        makeTwote();
-    }
-});
+function stopVideo() {
+  player.stopVideo();
+}
