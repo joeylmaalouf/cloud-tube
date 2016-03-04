@@ -37,4 +37,11 @@ routes.makeComment = function (req, res) {
   });
 };
 
+routes.deleteComment = function (req, res) {
+  Comment.findByIdAndRemove(req.body._id, function (err, comment) {
+    if (err) return res.status(500).send({"error": err});
+    res.json(comment.toObject());
+  });
+};
+
 module.exports = routes;
