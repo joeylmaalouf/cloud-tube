@@ -46,7 +46,9 @@ app.directive('ngEnterKeyPressed', function() {
     };
 });
 
-module.directive('selectOnClick', ['$window', function ($window) {
+// Select content when element gets focus (handy for pasting in urls)
+// (http://stackoverflow.com/questions/14995884/select-text-on-input-focus)
+app.directive('selectOnClick', ['$window', function ($window) {
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
