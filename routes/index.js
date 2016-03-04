@@ -15,4 +15,26 @@ routes.getCommentsForVideo = function (req, res) {
   });
 };
 
+routes.makeVideo = function (req, res) {
+  Video.create({
+    "_id": req,body._id,
+    "comments": []
+  }, function (err, video) {
+    if (err) return res.status(500).send({"error": err});
+    res.json(video.toObject());
+  });
+};
+
+routes.makeComment = function (req, res) {
+  Comment.create(req.body, function (err, comment) {
+    if (err) return res.status(500).send({"error": err});
+    Video.findById(req.params._id, function (err, video) {
+      if (err) return res.status(500).send({"error": err});
+      video.comments.push(comment);
+      video.save();
+    });
+    res.json(comment.toObject());
+  });
+};
+
 module.exports = routes;
