@@ -1,9 +1,7 @@
-var express = require('express');
-var router = express.Router();
+var path = require("path");
+var Video = require("../models/videoModel");
+var Comment = require("../models/commentModel");
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { message: "OlinJS rocks!" });
-});
+var routes = {};
 
-module.exports = router;
+module.exports = routes;
