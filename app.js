@@ -16,7 +16,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.get("/", index.home);
-app.get("/comments", index.getCommentsForVideo);
+app.get("/getCommentsForVideo/:_id", index.getCommentsForVideo);
+app.post("/makeVideo", index.makeVideo);
+app.post("/makeComment", index.makeComment);
+app.put("/deleteComment", index.deleteComment);
 
 app.listen(PORT, function () {
   console.log("Application running on port:", PORT);
