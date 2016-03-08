@@ -1,4 +1,4 @@
-// Scripts to control and integrate with youtube player
+// Scripts to control and integrate with YouTube player
 
 // This code loads the IFrame Player API code asynchronously.
 var tag = document.createElement("script");
@@ -13,7 +13,7 @@ function onYouTubeIframeAPIReady () {
   player = new YT.Player("player", { // Inject player into div with id "player"
     height: "390",
     width: "640",
-    videoId: "M7lc1UVf-VE",
+    videoId: "dQw4w9WgXcQ", // default
     events: {
       "onReady": onPlayerReady,
       "onStateChange": onPlayerStateChange
@@ -29,15 +29,5 @@ function onPlayerReady (event) {
 // The API calls this function when the player's state changes.
 var done = false;
 function onPlayerStateChange (event) {
-  console.log("Current time", getPos());
-}
-
-function stopVideo () {
-  player.stopVideo();
-}
-
-// Return the time since the video started playing;
-// Accounts for seeking within the video
-function getPos () {
-  return player.getCurrentTime();
+  console.log("Current time: " + player.getCurrentTime());
 }

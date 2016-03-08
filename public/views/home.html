@@ -1,12 +1,21 @@
 <div class="leftcol">
-  <div id="wrapper">
+  <div id="vidwrapper" class="centered">
     <div class="input_wrapper center_inline_block">
-    <input class="vid_URL" ng-enter-key-pressed select-on-click type="text" placeholder=""></input>
+      <input class="vid_URL" ng-enter-key-pressed select-on-click type="text" placeholder=""></input>
     </div>
     <br/>
     <div class="center_block" id="player"></div> <!-- This div gets replaced by the player iframe -->
   </div>
+  <br>
+  <div id="commentform" class="centered">
+    <input type="text" ng-model="formText">
+    <input type="button" value="Submit" ng-click="submitComment();">
+  </div>
 </div>
 <div class="rightcol">
-  comments appear here?
+  <table>
+    <tr ng-repeat="comment in comments">
+      <td>{{comment.time}}: {{comment.text}}</td>
+    </tr>
+  </table>
 </div>

@@ -1,17 +1,24 @@
+body {
+  margin: 20px;
+}
+
 .leftcol {
   float: left;
-  width: 60%;
+  width: 75%;
 }
 
 .rightcol {
   float: right;
-  width: 40%;
+  width: 25%;
 }
 
-#wrapper {
+.centered {
+  text-align: center;
+}
+
+#vidwrapper {
   width: 100%;
   height: 100%;
-  text-align: center;
 }
 
 input.vid_URL {
