@@ -5,7 +5,7 @@ var Comment = require("../models/commentModel");
 var routes = {};
 
 routes.home = function (req, res) {
-  res.sendFile("home.html", { "root": path.join(__dirname, "../public") });
+  res.sendFile("main.html", { "root": path.join(__dirname, "../public") });
 };
 
 routes.getCommentsForVideo = function (req, res) {
@@ -17,7 +17,7 @@ routes.getCommentsForVideo = function (req, res) {
 
 routes.makeVideo = function (req, res) {
   Video.create({
-    "_id": req,body._id,
+    "_id": req.body._id,
     "comments": []
   }, function (err, video) {
     if (err) return res.status(500).send({"error": err});
