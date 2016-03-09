@@ -61,7 +61,6 @@ input:focus {
 	position: relative;
 	width: 100%;
 	overflow: hidden;
-	-webkit-transition: 1s ease-in-out;
 }
 
 .comments > div {

@@ -8,11 +8,17 @@ var totalComments = comments.length;
 var app = angular.module("cloud-tube", ["ngRoute"]);
 var comments_offset = 0;
 
-function animateCommentsList() {
+function animateCommentsList(time) {
 	comments_offset += 15;
+	time_in_seconds = time/1000;
+	$('.comments').css('-webkit-transition', time_in_seconds + 's ease-in-out');
 	$('.comments').css('-webkit-transform', 'translate(0px, -' + comments_offset + 'px)');
-	// $('.comments').css('-webkit-animation-play-state', 'running');
-	// setTimeout(function() {$('.comments').children().first().remove();}, time);
+	
+	setTimeout(function() {
+		$('.comments').children().first().remove();
+		comments_offset -= 15;
+		$('.comments').css('-webkit-transition', 'none');
+		$('.comments').css('-webkit-transform', 'translate(0px, ' + comments_offset + 'px)');	}, time);
 }
 
 app.config(function ($routeProvider, $locationProvider) {
@@ -34,14 +40,7 @@ app.controller("mainController", function ($scope, $http) {
 		console.log($('.comments').children());
 
 		$("<div>" + comments[nextComment] + "</div>").insertAfter($('.comments').children().last());
-		// $('.comments').children().first().height(0);
-		// $('.comments').children().last().height(20);
-		// $('.comments').children().first().remove();
-		animateCommentsList();
-		// $('.comments').children().first().on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', 
-  //   		function() {
-  //   			$('.comments').children().first().remove();
-  //   		});
+		animateCommentsList(1000);
 	}
 
 	for (var i = 0; i < displayNum; i++) {
