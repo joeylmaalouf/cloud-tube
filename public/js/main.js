@@ -1,25 +1,27 @@
 // Main clientside javascript file
 // Contains main angular controller which handles all rendering and requests
 
-var comments = ['comment 1', 'comment 2', 'comment 3', 'comment 4', 'comment 5', 'comment 6', 'comment 7'];
-var displayNum = 4;
+var comments = ['comment 1', 'comment 2', 'comment 3', 'comment 4', 'comment 5', 'comment 6', 'comment 7']; // todo: draw from api
+var displayNum = 4; // Number of comments to dispaly at one time
 var nextComment = displayNum-1;
 var totalComments = comments.length;
 var app = angular.module("cloud-tube", ["ngRoute"]);
-var comments_offset = 0;
-var comment_height = 35;
-var deleteCommentById;
+var comments_offset = 0; // Net offset of comments div (translations don't stack)
+var comment_height = 35; // Height of one comment div (todo, make this not hardcoded)
+var deleteCommentById; // Function stub
 
+// Given a timestep, scroll to the next comment
 function animateCommentsList(time) {
+	$(genCommentHTML(comments[nextComment])).insertAfter($('.comments').children().last()); // Append comment to end of comments list
 	comments_offset += comment_height;
-	time_in_seconds = time/1000;
-	$('.comments').css('-webkit-transition', time_in_seconds + 's ease-in-out');
-	$('.comments').css('-webkit-transform', 'translate(0px, -' + comments_offset + 'px)');
+	time_in_seconds = time/1000; // Calc time in seconds for css animation
+	$('.comments').css('-webkit-transition', time_in_seconds + 's ease-in-out'); // Establish animation protocol
+	$('.comments').css('-webkit-transform', 'translate(0px, -' + comments_offset + 'px)'); // Translate the comments div up by the height of one comment
 	
 	setTimeout(function() {
-		$('.comments').children().first().remove();
-		comments_offset -= comment_height;
-		$('.comments').css('-webkit-transition', 'none');
+		$('.comments').children().first().remove(); // Remove first comment as it has scrolled out of view
+		comments_offset -= comment_height; // Quickly shift the comments div down by one comment to compensate for loss of top comment
+		$('.comments').css('-webkit-transition', 'none'); // Make the translation instantaneous so noone notices
 		$('.comments').css('-webkit-transform', 'translate(0px, ' + comments_offset + 'px)');	}, time);
 }
 
@@ -41,12 +43,11 @@ app.controller("mainController", function ($scope, $http) {
 		}
 		console.log($('.comments').children());
 
-		$(genCommentHTML(comments[nextComment])).insertAfter($('.comments').children().last());
-		animateCommentsList(1000);
+		animateCommentsList(1000); // timeframe (in millis) for comment shift animation
 	}
 
 	deleteCommentById = function() {
-		console.log('todo');
+		console.log('todo'); // todo: make this work
 	}
 
 	$scope.comments = [];
@@ -85,6 +86,7 @@ app.controller("mainController", function ($scope, $http) {
 	initComments();
 });
 
+// Generate comment div html from comment content
 function genCommentHTML(comment) {
 	return "<div><div class='comment_text'>" + comment + "</div><div class='delete_button' onclick='deleteCommentById()'>x</div></div>";
 }
@@ -130,6 +132,7 @@ app.directive("selectOnClick", ["$window", function ($window) {
 	};
 }]);
 
+// Initialize comments div
 function initComments() {
 	for (var i = 0; i < displayNum; i++) {
 		$(genCommentHTML(comments[i])).insertAfter($('.comments').children().last());
