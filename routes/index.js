@@ -16,19 +16,29 @@ routes.getCommentsForVideo = function (req, res) {
 };
 
 routes.makeVideo = function (req, res) {
-  Video.create({
-    "_id": req.body._id,
-    "comments": []
-  }, function (err, video) {
-    if (err) return res.status(500).send({"error": err});
-    res.json(video.toObject());
+  Video.count({"_id": req.body._id}, function (err, count) {
+    if (!count) {
+      Video.create({
+        "_id": req.body._id,
+        "comments": []
+      }, function (err, video) {
+        if (err) return res.status(500).send({"error": err});
+        res.json(video.toObject());
+      });
+    }
+    else {
+      res.json(req.body);
+    }
   });
 };
 
 routes.makeComment = function (req, res) {
-  Comment.create(req.body, function (err, comment) {
+  Comment.create({
+    "time": req.body.time,
+    "text": req.body.text
+  }, function (err, comment) {
     if (err) return res.status(500).send({"error": err});
-    Video.findById(req.params._id, function (err, video) {
+    Video.findById(req.body._id, function (err, video) {
       if (err) return res.status(500).send({"error": err});
       video.comments.push(comment);
       video.save();
