@@ -1,6 +1,10 @@
 // Main clientside javascript file
 // Contains main angular controller which handles all rendering and requests
 
+var comments = ['comment 1', 'comment 2', 'comment 3', 'comment 4', 'comment 5', 'comment 6', 'comment 7'];
+var displayNum = 4;
+var nextComment = displayNum-1;
+var totalComments = comments.length;
 var app = angular.module("cloud-tube", ["ngRoute"]);
 
 app.config(function ($routeProvider, $locationProvider) {
@@ -13,7 +17,34 @@ app.config(function ($routeProvider, $locationProvider) {
 });
 
 app.controller("mainController", function ($scope, $http) {
-  //
+	$scope.cycleComments = function() {
+		nextComment += 1;
+		console.log(nextComment);
+		if (nextComment == totalComments) {
+			nextComment = 0;
+		}
+		console.log($('.comments').children());
+
+		$("<tr><td>" + comments[nextComment] + "</td></tr>").insertAfter($('.comments').children().last());
+		$('.comments').children().first().height(0);
+		$('.comments').children().last().height(20);
+
+		$('.comments').children().first().on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', 
+    		function() {
+    			$('.comments').children().first().remove();
+    		});
+
+		// $('.comments').children().first().remove();
+
+		// $('#comment1').html(comments[currComment-1 >= 0 ? currComment-1 : totalComments-1]);
+		// $('#comment2').html(comments[currComment]);
+		// $('#comment3').html(comments[currComment+1 < totalComments ? currComment+1 : 0]);
+	}
+
+	for (var i = 0; i < displayNum; i++) {
+		$("<tr><td>" + comments[i] + "</td></tr>").insertAfter($('.comments').children().last());
+	}
+	$('.comments').children().first().remove();
 });
 
 app.directive("ngEnterKeyPressed", function () {
