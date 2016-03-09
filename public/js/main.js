@@ -6,6 +6,14 @@ var displayNum = 4;
 var nextComment = displayNum-1;
 var totalComments = comments.length;
 var app = angular.module("cloud-tube", ["ngRoute"]);
+var comments_offset = 0;
+
+function animateCommentsList() {
+	comments_offset += 15;
+	$('.comments').css('-webkit-transform', 'translate(0px, -' + comments_offset + 'px)');
+	// $('.comments').css('-webkit-animation-play-state', 'running');
+	// setTimeout(function() {$('.comments').children().first().remove();}, time);
+}
 
 app.config(function ($routeProvider, $locationProvider) {
   $routeProvider.when("/", {
@@ -25,24 +33,19 @@ app.controller("mainController", function ($scope, $http) {
 		}
 		console.log($('.comments').children());
 
-		$("<tr><td>" + comments[nextComment] + "</td></tr>").insertAfter($('.comments').children().last());
-		$('.comments').children().first().height(0);
-		$('.comments').children().last().height(20);
-
-		$('.comments').children().first().on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', 
-    		function() {
-    			$('.comments').children().first().remove();
-    		});
-
+		$("<div>" + comments[nextComment] + "</div>").insertAfter($('.comments').children().last());
+		// $('.comments').children().first().height(0);
+		// $('.comments').children().last().height(20);
 		// $('.comments').children().first().remove();
-
-		// $('#comment1').html(comments[currComment-1 >= 0 ? currComment-1 : totalComments-1]);
-		// $('#comment2').html(comments[currComment]);
-		// $('#comment3').html(comments[currComment+1 < totalComments ? currComment+1 : 0]);
+		animateCommentsList();
+		// $('.comments').children().first().on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', 
+  //   		function() {
+  //   			$('.comments').children().first().remove();
+  //   		});
 	}
 
 	for (var i = 0; i < displayNum; i++) {
-		$("<tr><td>" + comments[i] + "</td></tr>").insertAfter($('.comments').children().last());
+		$("<div>" + comments[i] + "</div>").insertAfter($('.comments').children().last());
 	}
 	$('.comments').children().first().remove();
 });
