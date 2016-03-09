@@ -7,16 +7,18 @@ var nextComment = displayNum-1;
 var totalComments = comments.length;
 var app = angular.module("cloud-tube", ["ngRoute"]);
 var comments_offset = 0;
+var comment_height = 35;
+var deleteCommentById;
 
 function animateCommentsList(time) {
-	comments_offset += 15;
+	comments_offset += comment_height;
 	time_in_seconds = time/1000;
 	$('.comments').css('-webkit-transition', time_in_seconds + 's ease-in-out');
 	$('.comments').css('-webkit-transform', 'translate(0px, -' + comments_offset + 'px)');
 	
 	setTimeout(function() {
 		$('.comments').children().first().remove();
-		comments_offset -= 15;
+		comments_offset -= comment_height;
 		$('.comments').css('-webkit-transition', 'none');
 		$('.comments').css('-webkit-transform', 'translate(0px, ' + comments_offset + 'px)');	}, time);
 }
@@ -39,15 +41,20 @@ app.controller("mainController", function ($scope, $http) {
 		}
 		console.log($('.comments').children());
 
-		$("<div>" + comments[nextComment] + "</div>").insertAfter($('.comments').children().last());
+		$(genCommentHTML(comments[nextComment])).insertAfter($('.comments').children().last());
 		animateCommentsList(1000);
 	}
 
-	for (var i = 0; i < displayNum; i++) {
-		$("<div>" + comments[i] + "</div>").insertAfter($('.comments').children().last());
+	deleteCommentById = function() {
+		console.log('todo');
 	}
-	$('.comments').children().first().remove();
+
+	initComments();
 });
+
+function genCommentHTML(comment) {
+	return "<div><div class='comment_text'>" + comment + "</div><div class='delete_button' onclick='deleteCommentById()'>x</div></div>";
+}
 
 app.directive("ngEnterKeyPressed", function () {
   return function (scope, element, attrs) {
@@ -92,3 +99,10 @@ app.directive("selectOnClick", ["$window", function ($window) {
     }
   };
 }]);
+
+function initComments() {
+	for (var i = 0; i < displayNum; i++) {
+		$(genCommentHTML(comments[i])).insertAfter($('.comments').children().last());
+	}
+	$('.comments').children().first().remove();
+}

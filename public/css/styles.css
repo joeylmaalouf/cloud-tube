@@ -52,9 +52,11 @@ input:focus {
 }
 
 .comments_wrapper {
+	margin-top: 5px;
 	overflow: hidden;
 	width: 80%;
-	height: 60px;
+	height: 20vh;
+	border-style: solid;
 }
 
 .comments {
@@ -64,20 +66,39 @@ input:focus {
 }
 
 .comments > div {
+	width: 90%;
 	display: block;
-	overflow: hidden;
-	height: 15px;
+	margin-bottom: 5px;
+	height: 30px;
+	border-radius: 5px;
+	background-color: #E6E6E6;
+	box-shadow: 1px 1px 5px #808080;
+	margin-left: 5px;
 }
 
-.rightcol button {
+.comments div.comment_text {
+	display: block;
 	float: left;
+	word-break: break-all;
 }
 
-@keyframes slide {
-	0% {
-		margin-top: 0px;
-	}
-	100% {
-		margin-top: -15px;
-	}
+.comments div.delete_button {
+	margin-right: 5px;
+	display: block;
+	float: right;
+	border-radius: 2px;
+	vertical-align: middle;
+	height: 10px;
+	width: 8px;
+	line-height: 8px;
+	cursor: pointer;
+	text-align: center;
+}
+
+.comments div.delete_button:hover {
+	background-color: grey;
+}
+
+.rightcol #cyclebutton {
+	float: left;
 }
