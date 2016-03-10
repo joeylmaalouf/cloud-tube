@@ -68,7 +68,7 @@ app.controller("mainController", function ($scope, $http, $interval) {
   };
   $scope.commentOptions = [
     ['Delete', function ($commentScope) {
-      deleteComment($commentScope.comment);
+      $scope.deleteComment($commentScope.comment);
     }]
   ];
   $scope.setVideo("dQw4w9WgXcQ");
