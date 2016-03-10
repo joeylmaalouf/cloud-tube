@@ -2,7 +2,7 @@
 // Contains main angular controller which handles all rendering and requests
 
 var comments = ['comment 1', 'comment 2', 'comment 3', 'comment 4', 'comment 5', 'comment 6', 'comment 7']; // todo: draw from api
-var displayNum = 4; // Number of comments to dispaly at one time
+var displayNum = 6; // Number of comments to display at one time
 var nextComment = displayNum-1;
 var totalComments = comments.length;
 var app = angular.module("cloud-tube", ["ngRoute"]);
@@ -11,10 +11,10 @@ var comment_height = 35; // Height of one comment div (todo, make this not hardc
 var deleteCommentById; // Function stub
 
 // Given a timestep, scroll to the next comment
-function animateCommentsList(time) {
-	$(genCommentHTML(comments[nextComment])).insertAfter($('.comments').children().last()); // Append comment to end of comments list
+function animateCommentsList(comment, time) {
+	$(genCommentHTML(comment)).insertAfter($('.comments').children().last()); // Append comment to end of comments list
 	comments_offset += comment_height;
-	time_in_seconds = time/1000; // Calc time in seconds for css animation
+	time_in_seconds = time/1000.0; // Calc time in seconds for css animation
 	$('.comments').css('-webkit-transition', time_in_seconds + 's ease-in-out'); // Establish animation protocol
 	$('.comments').css('-webkit-transform', 'translate(0px, -' + comments_offset + 'px)'); // Translate the comments div up by the height of one comment
 	
@@ -36,14 +36,7 @@ app.config(function ($routeProvider, $locationProvider) {
 
 app.controller("mainController", function ($scope, $http) {
 	$scope.cycleComments = function() {
-		nextComment += 1;
-		console.log(nextComment);
-		if (nextComment == totalComments) {
-			nextComment = 0;
-		}
-		console.log($('.comments').children());
-
-		animateCommentsList(1000); // timeframe (in millis) for comment shift animation
+		animateCommentsList("my Comment", 200); // timeframe (in millis) for comment shift animation
 	}
 
 	deleteCommentById = function() {
@@ -124,7 +117,6 @@ app.directive("selectOnClick", ["$window", function ($window) {
 		link: function ($scope, $element, $attrs) {
 		$element.on("click", function () {
 			if (!$window.getSelection().toString()) {
-				// Required for mobile Safari
 				this.setSelectionRange(0, this.value.length)
 			}
 		});
@@ -135,7 +127,10 @@ app.directive("selectOnClick", ["$window", function ($window) {
 // Initialize comments div
 function initComments() {
 	for (var i = 0; i < displayNum; i++) {
-		$(genCommentHTML(comments[i])).insertAfter($('.comments').children().last());
+		var comm = comments[i];
+		if (comm != undefined)
+		$(genCommentHTML(comm)).insertAfter($('.comments').children().last());
 	}
 	$('.comments').children().first().remove();
+	$('.comments_wrapper').first().css('height', displayNum * comment_height);
 }
