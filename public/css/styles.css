@@ -1,6 +1,7 @@
 body {
   font-family: "Alegreya Sans", sans-serif;
   margin: 20px;
+  background-color: #F8F8F8;
 }
 
 .leftcol {
@@ -14,7 +15,9 @@ body {
 }
 
 .commentbox {
-  height: 360px;
+  height: 400px;
+  background-color: #FFFFFF;
+  border-radius: 8px;
   overflow: auto;
   word-wrap: break-word;
 }
