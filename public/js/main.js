@@ -1,7 +1,7 @@
 // Main clientside javascript file
 // Contains main angular controller which handles all rendering and requests
 
-var app = angular.module("cloud-tube", ["ui.bootstrap.contextMenu", "ngRoute", "ngAnimate"]);
+var app = angular.module("cloud-tube", ["ngRoute", "ngAnimate", "ui.bootstrap.contextMenu", "luegg.directives"]);
 
 app.config(function ($routeProvider, $locationProvider) {
   $routeProvider.when("/", {
