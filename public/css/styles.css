@@ -1,4 +1,5 @@
 body {
+  font-family: "Alegreya Sans", sans-serif;
   margin: 20px;
 }
 
@@ -19,4 +20,28 @@ body {
 .centered-elem {
   margin: 0 auto;
   float: none;
+}
+
+table.spaced tr td {
+  padding-left: 10px;
+}
+
+.animated.ng-enter, 
+.animated.ng-leave
+{ 
+  -webkit-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+     -moz-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+      -ms-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+       -o-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+          transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+} 
+
+.animated.ng-enter.ng-enter-active, 
+.animated.ng-leave {
+  opacity: 1;
+}
+
+.animated.ng-leave.ng-leave-active,
+.animated.ng-enter {
+  opacity: 0;
 }

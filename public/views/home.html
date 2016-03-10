@@ -1,5 +1,6 @@
 <div class="leftcol">
   <div class="centered-block">
+    <h1>CloudTube</h1>
     <div class="form-group col-lg-10 centered-elem">
       <input type="text" class="form-control" placeholder="" ng-enter-key-pressed select-on-click></input>
     </div>
@@ -10,13 +11,14 @@
   <div class="centered-block">
     <textarea class="form-control" ng-model="formText"></textarea>
     <br>
-    <input type="button" class="btn" value="Submit" ng-click="submitComment();">
+    <input type="button" class="btn btn-lg btn-success-outline" value="Submit" ng-click="submitComment();">
   </div>
 </div>
 <div class="rightcol">
-  <table>
-    <tr ng-repeat="comment in comments">
-      <td>{{comment.time}}: {{comment.text}}</td>
+  <table class="spaced">
+    <tr ng-repeat="comment in comments track by $index" ng-if="currentVideoTime >= comment.time" class="animated">
+      <td><input type="button" class="btn btn-sm btn-danger-outline" value="x" ng-click="deleteComment(comment);"></td>
+      <td>{{comment.text}}</td>
     </tr>
   </table>
 </div>
