@@ -1,7 +1,7 @@
 // Main clientside javascript file
 // Contains main angular controller which handles all rendering and requests
 
-var app = angular.module("cloud-tube", ["ngRoute", "ngAnimate"]);
+var app = angular.module("cloud-tube", ["ui.bootstrap.contextMenu", "ngRoute", "ngAnimate"]);
 
 app.config(function ($routeProvider, $locationProvider) {
   $routeProvider.when("/", {
@@ -66,6 +66,11 @@ app.controller("mainController", function ($scope, $http, $interval) {
       function (err) { console.log(err); }
     );
   };
+  $scope.commentOptions = [
+    ['Delete', function ($commentScope) {
+      deleteComment($commentScope.comment);
+    }]
+  ];
   $scope.setVideo("dQw4w9WgXcQ");
 });
 
