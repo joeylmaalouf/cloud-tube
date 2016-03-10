@@ -17,6 +17,7 @@ app.controller("mainController", function ($scope, $http, $interval) {
   $scope.currentVideoID = "";
   $scope.currentVideoTime = 0;
   $scope.formText = "";
+  $scope.loggedIn = false;
   $scope.setVideo = function (videoID) {
     $scope.currentVideoID = videoID;
     if (player) {
@@ -51,14 +52,11 @@ app.controller("mainController", function ($scope, $http, $interval) {
     };
   };
   $scope.deleteComment = function (comment) {
-    $http.put("/deleteComment", {
-      "_id": $scope.currentVideoID,
-      "time": comment.time,
-      "text": comment.text
-    }).then(
+    comment._id = $scope.currentVideoID;
+    $http.put("/deleteComment", comment).then(
       function (res) {
         $scope.comments.forEach(function (elem, ind, arr) {
-          if (elem.time === comment.time && elem.text === comment.text) {
+          if (elem.author === comment.author && elem.time === comment.time && elem.text === comment.text) {
             arr.splice(ind, 1);
           }
         });
@@ -66,6 +64,13 @@ app.controller("mainController", function ($scope, $http, $interval) {
       function (err) { console.log(err); }
     );
   };
+  $scope.auth = function () {
+    window.location.href = $scope.loggedIn ? "/logout" : "/auth/github";
+  };
+  $http.get("/loggedIn").then(
+    function (res) { $scope.loggedIn = res.data.isAuth; },
+    function (err) { console.log(err); }
+  );
   $scope.commentOptions = [
     ["Delete", function ($commentScope) {
       $scope.deleteComment($commentScope.comment);

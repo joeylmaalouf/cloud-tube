@@ -14,7 +14,7 @@
   <div class="commentbox" scroll-glue>
     <table class="spaced">
       <tr ng-repeat="comment in comments track by $index" ng-if="currentVideoTime >= comment.time" class="animated" context-menu="commentOptions">
-        <td>{{comment.text}}</td>
+        <td>{{comment.author}}: {{comment.text}}</td>
       </tr>
     </table>
   </div>
@@ -25,3 +25,4 @@
     <input type="button" class="btn btn-lg btn-success-outline" value="Submit" ng-click="submitComment();">
   </div>
 </div>
+<input type="button" class="btn btn-lg" ng-value="loggedIn ? 'Sign Out' : 'Sign In'" ng-click="auth();">

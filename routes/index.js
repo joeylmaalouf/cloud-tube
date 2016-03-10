@@ -32,9 +32,14 @@ routes.makeVideo = function (req, res) {
 };
 
 routes.makeComment = function (req, res) {
+  if (!req.isAuthenticated()) {
+    res.status(401).send({"error": "401"});
+    return;
+  }
   var comment = {
     "time": req.body.time,
-    "text": req.body.text
+    "text": req.body.text,
+    "author": req.session.passport.user.username
   };
   Video.findById(req.body._id, function (err, video) {
     if (err) return res.status(500).send({"error": err});
@@ -50,6 +55,10 @@ routes.makeComment = function (req, res) {
 };
 
 routes.deleteComment = function (req, res) {
+  if (!req.isAuthenticated() || req.session.passport.user.username !== req.body.author) {
+    res.status(401).send({"error": "401"});
+    return;
+  }
   Video.findById(req.body._id, function (err, video) {
     if (err) return res.status(500).send({"error": err});
     video.comments.forEach(function (elem, ind, arr) {
