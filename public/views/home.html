@@ -1,7 +1,7 @@
 <div class="centered-block">
   <h1>CloudTube</h1>
    <div class="form-group col-lg-10 centered-elem">
-    <input type="text" class="form-control" placeholder="" ng-enter-key-pressed select-on-click></input>
+    <input type="text" class="form-control centered-block" placeholder="YouTube URL..." ng-enter-key-pressed select-on-click></input>
     <br>
   </div>
 </div>
@@ -9,17 +9,19 @@
   <div class="centered-block">
     <div id="player"></div> <!-- This div gets replaced by the player iframe -->
   </div>
+</div>
+<div class="rightcol">
+  <div class="commentbox">
+    <table class="spaced">
+      <tr ng-repeat="comment in comments track by $index" ng-if="currentVideoTime >= comment.time" class="animated" context-menu="commentOptions">
+        <td>{{comment.text}}</td>
+      </tr>
+    </table>
+  </div>
   <br>
   <div class="centered-block">
-    <textarea class="form-control" ng-model="formText"></textarea>
+    <textarea class="form-control" placeholder="Make a comment..." ng-model="formText"></textarea>
     <br>
     <input type="button" class="btn btn-lg btn-success-outline" value="Submit" ng-click="submitComment();">
   </div>
-</div>
-<div class="rightcol">
-  <table class="spaced">
-    <tr ng-repeat="comment in comments track by $index" ng-if="currentVideoTime >= comment.time" class="animated" context-menu="commentOptions">
-      <td>{{comment.text}}</td>
-    </tr>
-  </table>
 </div>
