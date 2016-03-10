@@ -10,7 +10,7 @@ routes.home = function (req, res) {
 routes.getCommentsForVideo = function (req, res) {
   Video.findById(req.params._id, function (err, video) {
     if (err) return res.status(500).send({"error": err});
-    res.json(video.comments);
+    res.json(video ? video.comments : []);
   });
 };
 
