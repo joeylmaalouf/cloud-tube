@@ -14,9 +14,10 @@
   </div>
 </div>
 <div class="rightcol">
-  <table>
-    <tr ng-repeat="comment in comments">
-      <td>{{comment.time}}: {{comment.text}}</td>
-    </tr>
-  </table>
+  <button type="button" ng-click='showComment()'>Click</button>
+  <div class="comments-wrapper">
+    <div ng-repeat="comment in comments" class="repeated-comment" ng-if="currentVideoTime >= comment.time" context-menu="commentOptions">
+      <div class='comment-text'> {{comment}} {{comment.time}}: {{comment.text}}</div>
+    </div>
+  </div>
 </div>
