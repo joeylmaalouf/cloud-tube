@@ -1,7 +1,7 @@
 // https://github.com/Templarian/ui.bootstrap.contextMenu
-angular.module('ui.bootstrap.contextMenu', [])
+angular.module("ui.bootstrap.contextMenu", [])
 
-.directive('contextMenu', ["$parse", "$q", function ($parse, $q) {
+.directive("contextMenu", ["$parse", "$q", function ($parse, $q) {
 
     var contextMenus = [];
 
@@ -19,42 +19,42 @@ angular.module('ui.bootstrap.contextMenu', [])
     var renderContextMenu = function ($scope, event, options, model, level) {
         if (!level) { level = 0; }
         if (!$) { var $ = angular.element; }
-        $(event.currentTarget).addClass('context');
-        var $contextMenu = $('<div>');
+        $(event.currentTarget).addClass("context");
+        var $contextMenu = $("<div>");
         if ($currentContextMenu) {
             $contextMenu = $currentContextMenu;
         } else {
             $currentContextMenu = $contextMenu;
         }
-        $contextMenu.addClass('dropdown clearfix');
-        var $ul = $('<ul>');
-        $ul.addClass('dropdown-menu');
-        $ul.attr({ 'role': 'menu' });
+        $contextMenu.addClass("dropdown clearfix");
+        var $ul = $("<ul>");
+        $ul.addClass("dropdown-menu");
+        $ul.attr({ "role": "menu" });
         $ul.css({
-            display: 'block',
-            position: 'absolute',
-            left: event.pageX + 'px',
-            top: event.pageY + 'px',
+            display: "block",
+            position: "absolute",
+            left: event.pageX + "px",
+            top: event.pageY + "px",
             "z-index": 10000
         });
         angular.forEach(options, function (item, i) {
-            var $li = $('<li>');
+            var $li = $("<li>");
             if (item === null) {
-                $li.addClass('divider');
+                $li.addClass("divider");
             } else {
                 var nestedMenu = angular.isArray(item[1])
                   ? item[1] : angular.isArray(item[2])
                   ? item[2] : angular.isArray(item[3])
                   ? item[3] : null;
-                var $a = $('<a>');
+                var $a = $("<a>");
                 $a.css("padding-right", "8px");
-                $a.attr({ tabindex: '-1', href: '#' });
-                var text = typeof item[0] == 'string' ? item[0] : item[0].call($scope, $scope, event, model);
+                $a.attr({ tabindex: "-1", href: "#" });
+                var text = typeof item[0] == "string" ? item[0] : item[0].call($scope, $scope, event, model);
                 $q.when(text).then(function (text) {
                     $a.text(text);
                     if (nestedMenu) {
                         $a.css("cursor", "default");
-                        $a.append($('<strong style="font-family:monospace;font-weight:bold;float:right;">&gt;</strong>'));
+                        $a.append($("<strong style=\"font-family:monospace;font-weight:bold;float:right;\">&gt;</strong>"));
                     }
                 });
                 $li.append($a);
@@ -69,20 +69,20 @@ angular.module('ui.bootstrap.contextMenu', [])
                         };
                         renderContextMenu($scope, ev, nestedMenu, model, level + 1);
                     }
-                    $li.on('click', function ($event) {
+                    $li.on("click", function ($event) {
                         //$event.preventDefault();
                         $scope.$apply(function () {
                             if (nestedMenu) {
                                 openNestedMenu($event);
                             } else {
-                                $(event.currentTarget).removeClass('context');
+                                $(event.currentTarget).removeClass("context");
                                 removeContextMenus();
                                 item[1].call($scope, $scope, event, model);
                             }
                         });
                     });
 
-                    $li.on('mouseover', function ($event) {
+                    $li.on("mouseover", function ($event) {
                         $scope.$apply(function () {
                             if (nestedMenu) {
                                 openNestedMenu($event);
@@ -90,10 +90,10 @@ angular.module('ui.bootstrap.contextMenu', [])
                         });
                     });
                 } else {
-                    $li.on('click', function ($event) {
+                    $li.on("click", function ($event) {
                         $event.preventDefault();
                     });
-                    $li.addClass('disabled');
+                    $li.addClass("disabled");
                 }
             }
             $ul.append($li);
@@ -105,21 +105,21 @@ angular.module('ui.bootstrap.contextMenu', [])
             document.body.clientHeight, document.documentElement.clientHeight
         );
         $contextMenu.css({
-            width: '100%',
-            height: height + 'px',
-            position: 'absolute',
+            width: "100%",
+            height: height + "px",
+            position: "absolute",
             top: 0,
             left: 0,
             zIndex: 9999
         });
-        $(document).find('body').append($contextMenu);
+        $(document).find("body").append($contextMenu);
         $contextMenu.on("mousedown", function (e) {
-            if ($(e.target).hasClass('dropdown')) {
-                $(event.currentTarget).removeClass('context');
+            if ($(e.target).hasClass("dropdown")) {
+                $(event.currentTarget).removeClass("context");
                 removeContextMenus();
             }
-        }).on('contextmenu', function (event) {
-            $(event.currentTarget).removeClass('context');
+        }).on("contextmenu", function (event) {
+            $(event.currentTarget).removeClass("context");
             event.preventDefault();
             removeContextMenus(level);
         });
@@ -130,7 +130,7 @@ angular.module('ui.bootstrap.contextMenu', [])
         contextMenus.push($ul);
     };
     return function ($scope, element, attrs) {
-        element.on('contextmenu', function (event) {
+        element.on("contextmenu", function (event) {
             event.stopPropagation();
             $scope.$apply(function () {
                 event.preventDefault();
@@ -140,7 +140,7 @@ angular.module('ui.bootstrap.contextMenu', [])
                     if (options.length === 0) { return; }
                     renderContextMenu($scope, event, options, model);
                 } else {
-                    throw '"' + attrs.contextMenu + '" not an array';
+                    throw "\"" + attrs.contextMenu + "\" not an array";
                 }
             });
         });

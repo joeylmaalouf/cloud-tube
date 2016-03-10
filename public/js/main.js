@@ -67,7 +67,7 @@ app.controller("mainController", function ($scope, $http, $interval) {
     );
   };
   $scope.commentOptions = [
-    ['Delete', function ($commentScope) {
+    ["Delete", function ($commentScope) {
       $scope.deleteComment($commentScope.comment);
     }]
   ];
