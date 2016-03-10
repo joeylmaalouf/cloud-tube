@@ -28,5 +28,5 @@ function onPlayerReady (event) {
 
 // The API calls this function when the player's state changes.
 function onPlayerStateChange (event) {
-  console.log("Current time: " + player.getCurrentTime());
+  // console.log("Current time: " + player.getCurrentTime());
 }

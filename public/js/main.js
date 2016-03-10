@@ -35,7 +35,7 @@ app.controller("mainController", function ($scope, $http, $interval) {
       },
       function (err) { console.log(err); }
     );
-    $interval(function () { $scope.currentVideoTime = player.getCurrentTime(); }, 100);
+    $interval(function () { if (player && player.getCurrentTime) $scope.currentVideoTime = player.getCurrentTime(); }, 100);
   };
   $scope.submitComment = function () {
     if ($scope.formText) {
