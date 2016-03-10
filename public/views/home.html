@@ -14,10 +14,9 @@
   </div>
 </div>
 <div class="rightcol">
-	<div class="comments_wrapper">
-  		<div class="comments">
-  			<div></div>
-  		</div>
-  	</div>
-  	<button id="cyclebutton" type="button" ng-click='cycleComments()'>Click</button>
+  <table>
+    <tr ng-repeat="comment in comments">
+      <td>{{comment.time}}: {{comment.text}}</td>
+    </tr>
+  </table>
 </div>
