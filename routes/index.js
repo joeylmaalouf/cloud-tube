@@ -1,6 +1,5 @@
 var path = require("path");
 var Video = require("../models/videoModel");
-var Comment = require("../models/commentModel");
 
 var routes = {};
 
@@ -33,24 +32,28 @@ routes.makeVideo = function (req, res) {
 };
 
 routes.makeComment = function (req, res) {
-  Comment.create({
+  var comment = {
     "time": req.body.time,
     "text": req.body.text
-  }, function (err, comment) {
+  };
+  Video.findById(req.body._id, function (err, video) {
     if (err) return res.status(500).send({"error": err});
-    Video.findById(req.body._id, function (err, video) {
-      if (err) return res.status(500).send({"error": err});
-      video.comments.push(comment);
-      video.save();
-    });
-    res.json(comment.toObject());
+    video.comments.push(comment);
+    video.save();
+    res.json(comment);
   });
 };
 
 routes.deleteComment = function (req, res) {
-  Comment.findByIdAndRemove(req.body._id, function (err, comment) {
+  Video.findById(req.body._id, function (err, video) {
     if (err) return res.status(500).send({"error": err});
-    res.json(comment.toObject());
+    video.comments.forEach(function (elem, ind, arr) {
+      if (elem.time === req.body.time && elem.text === req.body.text) {
+        arr.splice(ind, 1);
+      }
+    });
+    video.save();
+    res.json(req.body);
   });
 };
 

@@ -14,9 +14,11 @@
   </div>
 </div>
 <div class="rightcol">
-  <table>
+  <table class="spaced">
     <tr ng-repeat="comment in comments">
-      <td>{{comment.time}}: {{comment.text}}</td>
+      <td><input type="button" class="btn" value="x" ng-click="deleteComment(comment);"></td>
+      <td>{{comment.time}}:</td>
+      <td>{{comment.text}}</td>
     </tr>
   </table>
 </div>

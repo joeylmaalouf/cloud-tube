@@ -45,6 +45,23 @@ app.controller("mainController", function ($scope, $http) {
       $scope.formText = "";
     };
   };
+  $scope.deleteComment = function (comment) {
+    console.log(comment);
+    $http.put("/deleteComment", {
+      "_id": $scope.currentVideoID,
+      "time": comment.time,
+      "text": comment.text
+    }).then(
+      function (res) {
+        $scope.comments.forEach(function (elem, ind, arr) {
+          if (elem.time === comment.time && elem.text === comment.text) {
+            arr.splice(ind, 1);
+          }
+        });
+      },
+      function (err) { console.log(err); }
+    );
+  };
   $scope.setVideo("dQw4w9WgXcQ");
 });
 
@@ -82,7 +99,6 @@ app.directive("selectOnClick", ["$window", function ($window) {
     link: function ($scope, $element, $attrs) {
       $element.on("click", function () {
         if (!$window.getSelection().toString()) {
-          // Required for mobile Safari
           this.setSelectionRange(0, this.value.length)
         }
       });
