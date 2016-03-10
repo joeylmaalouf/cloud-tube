@@ -20,3 +20,55 @@ body {
   margin: 0 auto;
   float: none;
 }
+
+.comments_wrapper {
+	margin-top: 5px;
+	overflow: hidden;
+	width: 80%;
+	height: 20vh;
+	border-style: solid;
+}
+
+.comments {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+}
+
+.comments > div {
+	width: 90%;
+	display: block;
+	margin-bottom: 5px;
+	height: 30px;
+	border-radius: 5px;
+	background-color: #E6E6E6;
+	box-shadow: 1px 1px 5px #808080;
+	margin-left: 5px;
+}
+
+.comments div.comment_text {
+	display: block;
+	float: left;
+	word-break: break-all;
+}
+
+.comments div.delete_button {
+	margin-right: 5px;
+	display: block;
+	float: right;
+	border-radius: 2px;
+	vertical-align: middle;
+	height: 10px;
+	width: 8px;
+	line-height: 8px;
+	cursor: pointer;
+	text-align: center;
+}
+
+.comments div.delete_button:hover {
+	background-color: grey;
+}
+
+.rightcol #cyclebutton {
+	float: left;
+}
