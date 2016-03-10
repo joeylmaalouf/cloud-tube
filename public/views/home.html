@@ -15,7 +15,7 @@
 </div>
 <div class="rightcol">
   <table class="spaced">
-    <tr ng-repeat="comment in comments">
+    <tr ng-repeat="comment in comments" ng-if="currentVideoTime >= comment.time">
       <td><input type="button" class="btn" value="x" ng-click="deleteComment(comment);"></td>
       <td>{{comment.time}}:</td>
       <td>{{comment.text}}</td>

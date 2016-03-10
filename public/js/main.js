@@ -12,9 +12,10 @@ app.config(function ($routeProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 });
 
-app.controller("mainController", function ($scope, $http) {
+app.controller("mainController", function ($scope, $http, $interval) {
   $scope.comments = [];
   $scope.currentVideoID = "";
+  $scope.currentVideoTime = 0;
   $scope.formText = "";
   $scope.setVideo = function (videoID) {
     $scope.currentVideoID = videoID;
@@ -28,9 +29,13 @@ app.controller("mainController", function ($scope, $http) {
       function (err) { console.log(err); }
     );
     $http.get("/getCommentsForVideo/" + $scope.currentVideoID).then(
-      function (res) { $scope.comments = res.data; },
+      function (res) {
+        $scope.comments = res.data;
+        $scope.currentVideoTime = 0;
+      },
       function (err) { console.log(err); }
     );
+    $interval(function () { $scope.currentVideoTime = player.getCurrentTime(); }, 100);
   };
   $scope.submitComment = function () {
     if ($scope.formText) {
@@ -39,14 +44,13 @@ app.controller("mainController", function ($scope, $http) {
         "time": player.getCurrentTime(),
         "text": $scope.formText
       }).then(
-        function (res) { $scope.comments.push(res.data); },
+        function (res) { $scope.comments = res.data; },
         function (err) { console.log(err); }
       );
       $scope.formText = "";
     };
   };
   $scope.deleteComment = function (comment) {
-    console.log(comment);
     $http.put("/deleteComment", {
       "_id": $scope.currentVideoID,
       "time": comment.time,
