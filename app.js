@@ -67,7 +67,10 @@ app.get(
 );
 app.get("/loggedIn",
   function (req, res) {
-  	res.json({"isAuth": req.isAuthenticated()});
+  	res.json({
+      "isAuth": req.isAuthenticated(),
+      "name": req.isAuthenticated() ? req.session.passport.user.username : null
+    });
 });
 
 app.listen(PORT, function () {

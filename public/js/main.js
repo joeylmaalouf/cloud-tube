@@ -18,6 +18,7 @@ app.controller("mainController", function ($scope, $http, $interval) {
   $scope.currentVideoTime = 0;
   $scope.formText = "";
   $scope.loggedIn = false;
+  $scope.username = "";
   $scope.setVideo = function (videoID) {
     $scope.currentVideoID = videoID;
     if (player) {
@@ -68,7 +69,10 @@ app.controller("mainController", function ($scope, $http, $interval) {
     window.location.href = $scope.loggedIn ? "/logout" : "/auth/github";
   };
   $http.get("/loggedIn").then(
-    function (res) { $scope.loggedIn = res.data.isAuth; },
+    function (res) {
+      $scope.loggedIn = res.data.isAuth;
+      $scope.username = res.data.name || "Guest";
+    },
     function (err) { console.log(err); }
   );
   $scope.commentOptions = [

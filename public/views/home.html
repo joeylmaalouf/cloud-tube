@@ -1,6 +1,9 @@
-<input type="button" class="btn btn-sm btn-info-outline" ng-value="loggedIn ? 'Sign Out' : 'Sign In'" ng-click="auth();">
+<table><tr>
+<td><input type="button" class="btn btn-sm btn-info-outline" ng-value="loggedIn ? 'Sign Out' : 'Sign In'" ng-click="auth();"></td>
+<td><h3 class="aligned shadowed">Hello, {{username}}!</h3></td>
+</tr></table>
 <div class="centered-block">
-  <h1>CloudTube</h1>
+  <h1 class="shadowed">CloudTube</h1>
    <div class="form-group col-lg-10 centered-elem">
     <input type="text" class="form-control centered-block" placeholder="YouTube URL..." ng-enter-key-pressed select-on-click></input>
     <br>
