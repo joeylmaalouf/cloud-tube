@@ -3,6 +3,7 @@
 
 var app = angular.module("cloud-tube", ["ngRoute", "ngAnimate", "ui.bootstrap.contextMenu", "luegg.directives"]);
 
+// Nice use of routeProvider
 app.config(function ($routeProvider, $locationProvider) {
   $routeProvider.when("/", {
     templateUrl : "../views/home.html",
@@ -100,6 +101,7 @@ app.directive("ngEnterKeyPressed", function () {
         if(videoID != null) {
           $scope.setVideo(videoID[1]);
         } else { 
+          // Remove log statements from production/master code
           console.log("The provided YouTube URL is not valid.");
         }
         event.preventDefault();
