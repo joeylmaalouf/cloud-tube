@@ -8,6 +8,7 @@ var session = require("express-session");
 var passport = require("passport");
 var GithubStrategy = require("passport-github").Strategy;
 
+// Separate your auth logic from the app.js
 passport.serializeUser(function (user, done) {
   done(null, user);
 });

@@ -1,3 +1,4 @@
+// Never post credentials on githubbbbbbbbbb
 var ids = {
   github: {
     clientID: "1600bfa822f2f87ac496",

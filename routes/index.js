@@ -1,3 +1,4 @@
+// Remember to add comments on your code
 var path = require("path");
 var Video = require("../models/videoModel");
 
