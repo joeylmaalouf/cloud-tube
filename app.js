@@ -73,6 +73,7 @@ app.get("/loggedIn",
     });
 });
 
+//You should have a * route that serves the main html file.
 app.listen(PORT, function () {
   console.log("Application running on port:", PORT);
 });

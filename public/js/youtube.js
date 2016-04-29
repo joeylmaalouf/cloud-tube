@@ -1,5 +1,5 @@
 // Scripts to control and integrate with YouTube player
-
+//Not a very angular way to do this (as in it isn't really part of your angular app)
 // This code loads the IFrame Player API code asynchronously.
 var tag = document.createElement("script");
 
